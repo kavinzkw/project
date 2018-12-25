@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>订单发货-班次查询</title>
+<style type="text/css">
+			#main{
+				width: 100%;
+				position: absolute;
+				margin:auto 700px;
+			}
+		</style>
+		 <script type="text/javascript" src = "js/jquery1.9.0.min.js"></script>
+        <script type="text/javascript" src = "js/ajax.js"></script>
+		<script type="text/javascript">
+		     function sure(){
+		       var loadid = document.getElementById("shifts_rid").value;
+				var carid = document.getElementById("shifts_cid").value;
+				 $ajax({
+             url:"shifts.do",
+  				type:"post",
+  				data:{
+  					rid:loadid,
+  					cid:carid
+  				},
+    			success : function(data) {
+    			$(".tablelist tr").not(':eq(0)').empty();
+		    for(var i=0;i<data.length;i++){
+		    var tr=$('<tr></tr>');
+		     var td=$('<td>'+data[i].rid+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+data[i].cid+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+data[i].dtime+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+data[i].atime+'</td>');
+		    tr.append(td);
+		    $(".tablelist").append(tr);
+  			}
+    			},
+    			error:function(error){
+  					alert(error);
+  				}
+             });
+		     }
+		</script>
+	</head>
+	<body>
+		<div id="main">
+		<table class="table" width="600px" border="1px solid black" cellpadding="0px" cellspacing="0px">
+			<tr><td colspan="3" align="center"><h2 style="font-size: 26px;">查询班次</h2></td></tr>
+			<tr>
+				<td>
+					路线编号：
+				</td>
+				<td>
+					<input type="text" id="shifts_rid" style="width: 99%;" placeholder="请输入路线编号"/>
+				</td>
+				 
+			</tr>
+			<tr>
+				<td>
+					车辆编号：
+				</td>
+				<td>
+					<input type="text" id="shifts_cid" style="width: 99%;" placeholder="请输入车辆编号"/>
+				</td>
+				
+			</tr>	
+			<tr>
+				<td colspan="3" align="center">
+					<input type="button" value="确认" onclick="sure()"/>
+
+				</td>
+			</tr>
+		</table>
+		 <table  class="tablelist"  width="600px" border="1px solid black" cellpadding="0px" cellspacing="0px">
+                    <tr >
+                        <th style="text-align: center;" width="11%"> 路线编号</th>
+                        <th style="text-align: center;" width="11%">车量编号</th>
+                        <th style="text-align: center;" width="20%">出发时间</th>
+                        <th style="text-align: center;" width="20%">到达时间</th>
+                    </tr>
+            </table>
+		</div>
+
+	</body>
+</html>
+

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            订单管理-订单审核
+        </title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="./css/x-admin.css" media="all">
+        <link rel="stylesheet" href="css/pag.css" media="all"></script>
+        <style type="text/css">
+        .tablelist{
+           text-align:  center;
+        }
+        </style>
+        <script type="text/javascript" src = "js/jquery1.9.0.min.js"></script>
+        <script type="text/javascript" src = "js/ajax.js"></script>
+    <script type="text/javascript">
+    var num = 0;//所有checkbox的数量
+    $(function () {
+    //直接根据session的用户名得到所属站点的所有审核订单
+      $ajax({
+             url:"audit.do",
+  				type:"post",
+  				data:{
+  					
+  				},
+    			success : function(data) {
+                         $(".tablelist tr").not(':eq(0)').empty();
+    				for (var i = 0; i < data.length; i++) {
+    					var tr = $('<tr></tr>');
+    					var td =$( '<td>' +
+                            '<input type="checkbox" id="id" value="'+data[i].oId+'" name="selected"  onclick="oneToAll()">' +
+                        '</td>');
+    					tr.append(td);
+    					td = $("<td>" + data[i].oId + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].sePlace + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].rePlace + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].seName + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].setel + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].date + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].state + "</td>");
+    					tr.append(td);
+    					td = $('<td>' + '<input type="button" id="changestate" value="审核" onclick="ChangeState()"/>' + '</td>');
+                        tr.append(td);
+    					$(".tablelist").append(tr);
+    					num+=1;
+    				}
+    				document.getElementById("show_num").innerText ="当前数据有"+num+"条";
+    				
+    			},
+    			error:function(error){
+  					alert(error);
+  				}
+             });
+    //全选,设置chheckbox name='all' tbody id=tb
+    $("input[name=all]").click(function () {
+        if (this.checked) {
+            $("#tb :checkbox").prop("checked", true);
+        } else {
+            $("#tb :checkbox").prop("checked", false);
+        }
+    });
+});       //显示站点的所有审核订单
+function oneToAll() {
+
+var allChecked = 0;//所有选中checkbox的数量
+
+var all = 0;//所有checkbox的数量
+
+$("input:checkbox[name='selected']").each(function(i) {
+all++;	
+if ($(this).is(":checked")) {
+allChecked++;
+}
+
+});
+
+if(allChecked==all){//相等时，则所有的checkbox都选中了，否则，反之；
+
+$("#checkall").prop("checked",true);
+
+}else{
+
+$("#checkall").prop("checked",false);
+
+}
+
+}
+         /*   function sousuo(){
+            var statenum = document.getElementById("statenum").value; 
+            if(statenum!=""){
+             $ajax({
+             url:"audit.do",
+  				type:"post",
+  				data:{
+  					
+  				},
+    			success : function(data) {
+                         $(".tablelist tr").not(':eq(0)').empty();
+    				for (var i = 0; i < data.length; i++) {
+    					var tr = $('<tr></tr>');
+    					var td =$( '<td>' +
+                            '<input type="checkbox" id="id" value="'+data[i].oId+'" name="selected"  onclick="oneToAll()">' +
+                        '</td>');
+    					tr.append(td);
+    					td = $("<td>" + data[i].oId + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].sePlace + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].rePlace + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].seName + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].setel + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].date + "</td>");
+    					tr.append(td);
+    					td = $("<td>" + data[i].state + "</td>");
+    					tr.append(td);
+    					td = $('<td>' + '<input type="button" id="changestate" value="审核" onclick="ChangeState()"/>' + '</td>');
+                        tr.append(td);
+    					$(".tablelist").append(tr);
+    					num+=1;
+    				}
+    				document.getElementById("show_num").innerText ="当前数据有"+num+"条";
+    				
+    			},
+    			error:function(error){
+  					alert(error);
+  				}
+             });
+            }
+            else{
+              alert("请输入站点编号");
+            }
+             
+           } */
+           function ChangeState(){
+                var value ="";//定义一个数组    
+       $('input[name="selected"]:checked').each(function(){//遍历每一个名字为selected的复选框，其中选中的执行函数    
+       value+=$(this).val()+",";//将选中的值添加value中，以逗号分开  
+       });
+       if(value!=""){
+         $ajax({
+             url:"audit.do",
+  				type:"post",
+  				data:{
+  					changsid:value
+  				},
+    			success : function(data) {
+                        alert(data.substring(3));
+    			},
+    			error:function(error){
+  					alert(error);
+  				}
+             });
+             }
+}
+        
+        </script>  
+    </head>
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+              <a><cite>首页</cite></a>
+              <a><cite>订单审核</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+                    <div class="layui-input-inline" style="width:400px">
+                         <!-- 从此处得到数据 --> 
+                     <label>站点编号</label> <input type="text" name="statename" id="statenum" placeholder="请输入站点编号" autocomplete="off" class="layui-input">
+                       <button class="layui-btn" onclick = "sousuo()">搜索</button>
+                    </div> 
+            <div class="tools">
+            <br>
+    <input type="button" id="changestate" value="批量审核" onclick="ChangeState()"/>
+    <label id="show_num" style="line-height:25px ;">当前数据有0条</label></xblock>
+      <br>
+  </div>
+           <table  class="tablelist">
+                <thead>
+                    <tr >
+                    <th style="text-align: center;" width="10%">
+                           <input type="checkbox" id="checkall" name="all">全选
+                        </th>
+                        <th style="text-align: center;" width="10%">订单编号</th>
+                        <th style="text-align: center;" width="10%">起点</th>
+                        <th style="text-align: center;" width="10%">配送地</th>
+                        <th style="text-align: center;" width="10%">寄件人</th>
+                        <th style="text-align: center;" width="10%">联系方式</th>
+                        <th style="text-align: center;" width="10%">寄件时间</th>
+                        <th style="text-align: center;" width="10%">显示状态</th>
+                        <th style="text-align: center;" width="10%">操作</th>
+                    </tr>
+                </thead>
+                 <tbody id="tb">
+                 </tbody>
+                
+            </table>
+              
+          
+            
+        
+              
+            
+            
+            
+<br />
+<br />
+<br />
+       
+    </body>
+</html>

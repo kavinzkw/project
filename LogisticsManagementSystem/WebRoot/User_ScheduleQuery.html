@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>客户端-查询订单</title>
+		<link href="css/user_queryoid.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="js/jquery1.9.0.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+		<style type="text/css">
+			#main{
+				width: 1920;
+				position: absolute;
+				margin:auto 700px;
+			}
+		</style>
+		<script type="text/javascript">
+		var Orders=null;
+		var Orders_id=null;
+		$(function(){
+		$ajax({
+		url:"User_ScheduleQuery.do",
+		type:"get",
+		data:{"Orders":Orders,"Orders_id":Orders_id},
+		success:function(data){
+		if(data.length>0){
+		var tr=$("<tr><td>订单编号</td><td>寄货人</td><td>寄货日期</td><td>收货日期</td><td>类别</td><td>状态</td><td>签收人</td></tr>");
+		$("#show_table").append(tr);
+		}
+		for(var i=0;i<data.length;i++){
+		var tr=$('<tr onclick="detailed($(this))"></tr>');
+		var td=$("<td>"+data[i].oid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].send_name+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].send_data+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].receiving_data+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].category+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].state+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].receiving_name+"</td>");
+		tr.append(td);
+		$("#show_table").append(tr);
+		}
+		},
+		error:function(data){alert(data);}
+		});
+		});
+		function detailed(obj){
+		Orders=null;
+		Orders_id=obj.children('td').eq(0).text();
+		$ajax({
+		url:"User_ScheduleQuery.do",
+		type:"get",
+		data:{"Orders":Orders,"Orders_id":Orders_id},
+		success:function(data){
+		if(data.length>0){
+		$("#query_table").empty();
+		var tr=$("<tr><td>到达站点</td><td>到达时间</td></tr>");
+		$("#query_table").append(tr);
+		for(var i=0;i<data.length;i++){  
+		var tr=$("<tr></tr>");
+		var td=$("<td>"+data[i].sname+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].data+"</td>");
+		tr.append(td);
+		$("#query_table").append(tr);
+		
+		}
+		}
+		},
+		error:function(data){alert(data);}
+		});
+		}
+		function lookup(){
+		Orders_id=null;
+		var oid=$("#query_oid").val();
+		Orders=oid;
+		if(oid!=null){
+		$ajax({
+		url:"User_ScheduleQuery.do",
+		type:"get",
+		data:{"Orders":Orders,"Orders_id":Orders_id},
+		success:function(data){
+		if(data!="msg"){
+		$("#show_table").empty();
+		var tr=$("<tr><td>订单编号</td><td>寄货人</td><td>寄货日期</td><td>收货日期</td><td>类别</td><td>状态</td><td>签收人</td></tr>");
+		$("#show_table").append(tr);
+		$("#show_table").append(tr);
+		
+		for(var i=0;i<data.length;i++){
+		var tr=$('<tr onclick="detailed($(this))"></tr>');
+		var td=$("<td>"+data[i].oid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].send_name+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].send_data+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].receiving_data+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].category+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].state+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].receiving_name+"</td>");
+		tr.append(td);
+		$("#show_table").append(tr);
+		$("#query_table").empty();
+		}
+		}
+		else 
+		 alert("物流编号或收货人不存在");
+		},
+		error:function(data){alert(data);}
+		});
+		}
+		}
+		</script>
+		
+	</head>
+
+	<body>
+		<div id="main">
+		<table class="table" width="400px" border="1px solid black" cellpadding="0px" cellspacing="0px">
+			<tr><td colspan="3" align="center"><h2 style="font-size: 26px;">查询订单</h2></td></tr>
+			<tr>
+				<td>
+					订单编号或收货人：
+				</td>
+				<td>
+					<input type="text" id="query_oid" />
+				</td>
+				<td>
+					<input type="button" value="确认" onclick="lookup()"/>
+				</td>
+			</tr>
+		</table>
+		<table cellpadding="0px" cellpadding="0px" border="1px" id="show_table"></table>
+		<table cellpadding="0px" cellpadding="0px" border="1px" id="query_table">
+		</table>
+		</div>
+	</body>
+
+</html>

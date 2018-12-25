@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>订单发货-待发订单管理</title>
+		<script type="text/javascript" src="js/jquery1.9.0.min.js" ></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+		<script type="text/javascript">
+		var fxsite=null;
+		var yssid=null;
+		var oids=null;
+		var i=1;
+		$(function(){
+		    $ajax({
+		    url:"Adm_SendOrd_WaitForSend.do",
+		    type:"post",
+		    data:{"fxsite":fxsite,"yssid":yssid,"oids":oids},
+		    success:function(data){
+		    if(data!="msg"){
+		    var sites=data[0];
+		    var Orders=data[1]; 
+		    for(var i=0;i<sites.length;i++){
+		    $("#selectID").append("<option value="+sites[i].sname+">"+sites[i].sname+"</option>");  
+		    }
+		    for(var i=0;i<Orders.length;i++){
+		    var tr=$('<tr></tr>');
+		    var td=$('<td><input type="checkbox" name="check" value='+Orders[i].oid+'></td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].oid+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].sname+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].category+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].send_data+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].surplus_data+'</td>');
+		    tr.append(td);
+		    $("#table").append(tr);
+		    }
+		    }
+		    },
+		    error:function(data){}
+		    });
+		});
+		function fx(){
+			fxsite=$("#selectID").val();
+			yssid=null;
+			oids=null;
+			$ajax({
+		    url:"Adm_SendOrd_WaitForSend.do",
+		    type:"post",
+		    data:{"fxsite":fxsite,"yssid":yssid,"oids":oids},
+		    success:function(data){
+		    if(data!="msg"){
+		    var Orders=data[1];
+		    $("#table tr").not(':eq(0)').hide();
+		     $("#table tr").not(':eq(0)').empty();
+		    for(var i=0;i<Orders.length;i++){
+		    var tr=$('<tr></tr>');
+		    var td=$('<td><input type="checkbox" name="check" value='+Orders[i].oid+'></td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].oid+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].sname+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].category+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].send_data+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].surplus_data+'</td>');
+		    tr.append(td);
+		    $("#table").append(tr);
+		    }
+		    }
+		    },
+		    error:function(data){}
+		    });
+		}
+		 function fdandfh(){
+		     fxsite=null;
+		     oids="";
+             $.each($('input:checkbox:checked'),function(){
+                 if($('input:checkbox:checked').length>0&&$("#sid").val()!=null){
+                    oids=oids+$(this).val()+",";
+                    yssid=$("#sid").val();
+                    }
+             });
+            if(yssid){
+            $ajax({
+		    url:"Adm_SendOrd_WaitForSend.do",
+		    type:"post",
+		    data:{"fxsite":fxsite,"yssid":yssid,"oids":oids},
+		    success:function(data){
+		    if(data!="msg"){
+		    var sites=data[0];
+		    var Orders=data[1];
+		     $("#table tr").not(':eq(0)').hide();
+		     $("#table tr").not(':eq(0)').empty();
+		     $("#selectID option").not(':eq(0)').hide();
+		    for(var i=0;i<sites.length;i++){
+		    $("#selectID").append("<option value="+sites[i].sname+">"+sites[i].sname+"</option>");  
+		    }
+		    for(var i=0;i<Orders.length;i++){
+		    var tr=$('<tr></tr>');
+		    var td=$('<td><input type="checkbox" name="check" value='+Orders[i].oid+'></td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].oid+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].sname+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].category+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].send_data+'</td>');
+		    tr.append(td);
+		    td=$('<td>'+Orders[i].surplus_data+'</td>');
+		    tr.append(td);
+		    $("#table").append(tr);
+		    }
+		    }
+		    alert("更改成功！");
+		    $("checkbox").removeAttr("checked");
+		    },
+		    error:function(data){}
+		    });
+		    }
+		    else{alert("请选择订单或填写运输单号");}
+}
+    function dj() {
+        if (i%2==1) {
+             i++;
+              $("input[name='check']").each(function(){ 
+             $(this).prop("checked",true);
+             });
+        } else {
+             i++;
+               $("input[name='check']").each(function(){ 
+             $(this).prop("checked",false);
+            });
+        }
+    }
+
+		</script>
+	</head>
+	<body>
+	发向站点：<select id="selectID" onchange="fx()">
+	<option value="null">未选择</option>
+	 </select>
+	 运输单号：<input type="text" id="sid">
+	<table id="table">
+	<tr>
+	  <td onclick="dj()">全选</td>
+	  <td>订单号</td>
+	  <td>发向站点</td>
+	  <td>订单类别</td>
+	  <td>接受时间</td>
+	  <td>剩余时间（天）</td>
+	</tr>
+	</table>
+	<input type="button" value="封单并发货" onclick="fdandfh()">
+	</body>
+</html>

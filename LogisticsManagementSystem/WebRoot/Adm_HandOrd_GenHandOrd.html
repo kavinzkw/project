@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>交接单管理-生成交接单</title>
+		
+		<style type="text/css">
+  		span{
+  			color:red;
+  		}
+  	</style>
+		
+		 <script type="text/javascript" src="ajax.js"></script> 
+		<script type="text/javascript">
+	function getXhr(){
+  			var xhr = null;
+  			//证明是非IE内核
+  			if(window.XMLHttpRequest){
+  				xhr = new XMLHttpRequest();
+  			//否则就是IE内核
+  			}else{
+  				xhr = new ActiveXObject("Microsoft.XMLHttp");
+  			}
+  			return xhr;
+  		}
+  		//2、发送ajax请求
+  		function fun(val){
+  			//获取对象
+  			var xhr = getXhr();
+  			//构建我们要发送的信息
+  			var url = "ajax.do?ssid="+val;
+  			//设置发送模式
+  			xhr.open("get", url);
+  			//绑定监听器
+  			xhr.onreadystatechange = function(){
+  				//如果它为4就证明已经完成了数据的前后端的交互并且得到了响应
+  				if(xhr.readyState==4){
+  					//如果为200，就证明一切正常
+  					if(xhr.status==200){
+  						//如果正常的话，我们就获取到后台发送过来的数据
+  						var msg = xhr.responseText;
+  				
+  	        			document.getElementById("msg").innerHTML=msg;
+  			
+  					//如果不是200，就证明服务器异常
+  					}else{
+  						alert("服务器异常！")
+  					}
+  				}
+  			}
+  			//发送
+  			xhr.send(null);
+  		}
+		</script>
+		<script type="text/javascript">
+		
+		</script>
+	</head>
+	<body>
+		 <div class="x-body">
+            <form class="layui-form layui-form-pane"  action="adm-g.do">
+                <div class="layui-form-item">
+                    <label for="L_title" class="layui-form-label">
+                      封单号：
+                  </label>
+                    <div class="layui-input-block">
+                        <input type="text" id="L_title" name="ssid" class="layui-input"  value =""  onblur="fun(this.value);">
+                        <span id="msg"></span>
+                    </div>
+                    <div class="layui-form-item">
+                   
+                <div class="layui-form-item">
+                   <input type="submit"  value="确认"  >
+                </div>
+            </form>
+        </div>
+	</body>
+</html>

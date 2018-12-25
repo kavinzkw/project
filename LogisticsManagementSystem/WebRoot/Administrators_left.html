@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>站点管理员系统</title>
+<link rel="stylesheet" type="text/css" href="css/public.css">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<head></head>
+
+<body id="bg">
+	<!-- 左边节点 -->
+	<div class="container">
+
+		<div class="leftsidebar_box">
+			<a href="main.html" target="Administrators_main">
+            <div class="line">
+		    <img class="icon1" src="images/coin01.png" />
+            <img class="icon2" src="images/coin02.png" />&nbsp;&nbsp;首页
+			</div>
+            </a>
+            <!--订单管理-->
+           <dl class="system_log">
+				<dt>
+					<img class="icon1" src="images/coin15.png" />
+                    <img class="icon2" src="images/coin16.png" />
+                                        订单管理
+                    <img class="icon3" src="images/coin19.png" />
+                    <img class="icon4" src="images/coin20.png" />
+				</dt>
+				<dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="Adm_OrdMan_AddOdr.html" target="Administrators_main" class="cks">增加订单</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+				<dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="Adm_OrdMan_CheckOrd.html" target="Administrators_main" class="cks">订单审核</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+				<dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="Adm_OrdMan_OrdState.html" target="Administrators_main" class="cks">订单状态修改</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+			</dl>
+            <!--异常订单处理-->
+            <dl class="system_log">
+				<dt>
+					<img class="icon1" src="images/coin09.png" />
+                    <img class="icon2" src="images/coin10.png" />
+                                         异常订单处理
+                    <img class="icon3" src="images/coin19.png" />
+                    <img class="icon4" src="images/coin20.png" />
+				</dt>
+				<dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="Adm_AbnormalOrd_Reg.html" target="Administrators_main" class="cks">异常订单登记</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+                <dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="Adm_AbnormalOrd_Man.html" target="Administrators_main" class="cks">异常订单处理</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+			</dl>
+        <!--订单发货-->
+			<dl class="system_log">
+				<dt>
+					<img class="icon1" src="images/coin07.png" />
+                    <img class="icon2" src="images/coin08.png" />
+                                        订单发货
+                    <img class="icon3" src="images/coin19.png" />
+                    <img class="icon4" src="images/coin20.png" />
+				</dt>
+				<dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="Adm_SendOrd_WaitForSend.html" target="Administrators_main" class="cks">待发订单管理</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+                <dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="Adm_SendOrd_ApplyTruck.html" target="Administrators_main" class="cks">加开班次申请</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+				<dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="Adm_SendOrd_QueryTruck.html" target="Administrators_main" class="cks">班次查询</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+			</dl>
+            
+			<dl class="system_log">
+				<dt>
+					<img class="icon1" src="images/coin05.png" />
+                    <img class="icon2" src="images/coin06.png" />
+                                          添加交接单
+                     <img class="icon3" src="images/coin19.png" />
+                     <img class="icon4" src="images/coin20.png" />
+				</dt>
+				<dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a class="Adm_HandOrd_GenHandOrd.html" href="Warning_management.html" target="Administrators_main">生成交接单</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+			</dl>
+            
+			<dl class="system_log">
+				<dt>
+					<img class="icon1" src="images/coin03.png" />
+                    <img class="icon2" src="images/coin04.png" />
+                                           货物配送
+                     <img class="icon3" src="images/coin19.png" />
+                     <img class="icon4" src="images/coin20.png" />
+				</dt>
+				<dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="Adm_DistributeOrd_QueryStock.html" target="Administrators_main" class="cks">库存订单查询</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+                <dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="Adm_DistributeOrd_ConFirmOrd.html" target="Administrators_main" class="cks">订单完成确定</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+      
+			</dl>
+            
+			<dl class="system_log">
+				<dt>
+					<img class="icon1" src="images/coinL1.png" />
+                    <img class="icon2" src="images/coinL2.png" />
+                                          本地信息设置
+                    <img class="icon3" src="images/coin19.png" />
+                    <img class="icon4" src="images/coin20.png" />
+				</dt>
+				<dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="./link.html" target="Administrators_main" class="cks">配送价格申报</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+				<dd>
+					<img class="coin11" src="images/coin111.png" />
+                    <img class="coin22" src="images/coin222.png" />
+                    <a href="./link.html" target="Administrators_main" class="cks">配送范围修改</a>
+                    <img class="icon5" src="images/coin21.png" />
+				</dd>
+			</dl>
+
+		</div>
+
+	</div>
+</body>
+</html>

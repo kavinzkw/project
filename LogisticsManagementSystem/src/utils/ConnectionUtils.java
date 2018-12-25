@@ -70,6 +70,21 @@ public class ConnectionUtils {
 			rs.close();
 		}
 	}
+	
+	public static void close(Connection conn,
+			PreparedStatement... psmts) throws SQLException {
+		if (conn != null) {
+			conn.close();
+
+		}
+		if (psmts != null) {
+			for(PreparedStatement psmt:psmts){
+				if(psmt!=null){
+					psmt.close();
+				}
+			}
+		}
+	}
 
 	/**
 	 * 该方法是用来获取到当前时间之后，然后格式化成一个适合作为主键的日期格式 比如，201508221640
