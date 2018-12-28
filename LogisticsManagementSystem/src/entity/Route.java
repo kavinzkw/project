@@ -3,6 +3,7 @@ package entity;
 public class Route {
    private String sname;
    private String data;
+   //路线时间实体类
 public String getSname() {
 	return sname;
 }

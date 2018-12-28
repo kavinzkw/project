@@ -8,11 +8,28 @@
   		span{
   			color:red;
   		}
+  		#con{
+  		width: 550px;
+  		height: 400px;
+  		}
+  		#div{
+  position: absolute;
+  left: 400px;
+  top: 225px;
+  height: 100px;
+  width: 250px;
+}
+ #bu{
+  position: absolute;
+   left: 700px;
+  top: 225px;
+ }
   	</style>
 		
-		 <script type="text/javascript" src="ajax.js"></script> 
+		 <script type="text/javascript" src="js/ajax.js"></script> 
+		 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 		<script type="text/javascript">
-	function getXhr(){
+       		function getXhr(){
   			var xhr = null;
   			//证明是非IE内核
   			if(window.XMLHttpRequest){
@@ -31,7 +48,7 @@
   			var url = "ajax.do?ssid="+val;
   			//设置发送模式
   			xhr.open("get", url);
-  			//绑定监听器
+  			//绑定监听器	
   			xhr.onreadystatechange = function(){
   				//如果它为4就证明已经完成了数据的前后端的交互并且得到了响应
   				if(xhr.readyState==4){
@@ -39,38 +56,55 @@
   					if(xhr.status==200){
   						//如果正常的话，我们就获取到后台发送过来的数据
   						var msg = xhr.responseText;
-  				
-  	        			document.getElementById("msg").innerHTML=msg;
-  			
+  						document.getElementById("msg").innerHTML = msg;
+  						if(msg=="单号错误"){
+  							document.getElementById("ssid").value="";
+  						
+  						}else if(msg=="单号不存在"){
+  							document.getElementById("ssid").value="";
+  							
+  						}
+  						delete xhr;
   					//如果不是200，就证明服务器异常
   					}else{
-  						alert("服务器异常！")
+  						document.getElementById("msg").innerHTML = "服务器异常";
   					}
   				}
   			}
-  			//发送
+  			document.getElementById("msg").innerHTML = "验证中...";
   			xhr.send(null);
-  		}
+  			};
+		function alretmsg(){
+	
+		   var ts=document.getElementById("msg").innerHTML;
+		   var ss=document.getElementById("ssid").value;
+			if(ts=="验证中..."||ts=="单号不存在"||ts=="单号错误"||ts==""){ 
+				return false;
+			}else{
+				alert("插入成功");
+				return true;
+				$("#cb").is(":checked")==false
+			}
+		};		 
 		</script>
 		<script type="text/javascript">
-		
+				
 		</script>
 	</head>
 	<body>
 		 <div class="x-body">
-            <form class="layui-form layui-form-pane"  action="adm-g.do">
-                <div class="layui-form-item">
+            <form class="layui-form layui-form-pane"   action="adm-g.do" method="get"  onsubmit="return alretmsg();" >
+                <div class="layui-form-item"  style=" text-align: center; " id="con">
+                <div class="layui-form-item" id="div" style=" text-align: center; ">
                     <label for="L_title" class="layui-form-label">
-                      封单号：
+                     	 封单号：
                   </label>
-                    <div class="layui-input-block">
-                        <input type="text" id="L_title" name="ssid" class="layui-input"  value =""  onblur="fun(this.value);">
-                        <span id="msg"></span>
-                    </div>
+                        <input type="text" id="ssid" name="ssid" class="layui-input"  value =""   onblur="fun(this.value);" >
+                        <span id="msg" style="80px"></span>
+                        </div>
                     <div class="layui-form-item">
-                   
-                <div class="layui-form-item">
-                   <input type="submit"  value="确认"  >
+                <div class="layui-form-item"  id="bu" >
+                   <input type="submit"  value="提交" >
                 </div>
             </form>
         </div>

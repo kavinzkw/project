@@ -3,15 +3,84 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>班次管理-增加班次</title>
+	<style type="text/css">
+			#main{
+				width: 100%;
+				position: absolute;
+				margin:auto 700px;
+			}
+		</style>
+		 <script type="text/javascript" src = "js/jquery1.9.0.min.js"></script>
+        <script type="text/javascript" src = "js/ajax.js"></script>
+		<script type="text/javascript">
+		     function sure(){
+		       var loadid = document.getElementById("shifts_rid").value;
+				var carid = document.getElementById("shifts_cid").value;
+				var time = document.getElementById("shifts_time").value;
+			if(loadid!=""&&carid!=""&&time!="")	
+			{
+				 $ajax({
+             url:"addshifts.do",
+  				type:"post",
+  				data:{
+  					rid:loadid,
+  					cid:carid,
+  					date:time
+  				},
+    			success : function(data) {
+    			alert(data.substring(3));
+    			},
+    			error:function(error){
+  					alert(error);
+  				}
+             });}
+             else{
+             alert("请输入完整的数据");
+             }
+		     }
+		</script>
 	</head>
 	<body>
-		<table cellpadding="0px" cellspacing="0px" border="1px solid black" width="600px">
+		<div id="main">
+		<table class="table" width="400px" border="1px solid black" cellpadding="0px" cellspacing="0px">
+			<tr><td colspan="3" align="center"><h2 style="font-size: 26px;">增加班次</h2></td></tr>
 			<tr>
-				<td>路线编号</td>
-				<td>车辆编号</td>
-				<td>发车时间</td>
-				<td>到达时间</td>
+				<td>
+					路线编号：
+				</td>
+				<td>
+					<input type="text" id="shifts_rid" style="width: 99%;" placeholder="请输入路线编号"/>
+				</td>
+				 
+			</tr>
+			<tr>
+				<td>
+					车辆编号：
+				</td>
+				<td>
+					<input type="text" id="shifts_cid" style="width: 99%;" placeholder="请输入车辆编号"/>
+				</td>
+				
+			</tr>
+			<tr>
+				<td>
+					发车时间：
+				</td>
+				<td>
+					<input type="text" id="shifts_time" style="width: 99%;" placeholder="请输入时间如:201812182130"/>
+				</td>
+				
+			</tr>
+			<tr>
+				<td colspan="3" align="center">
+					<input type="button" value="确认" onclick="sure()"/>
+
+				</td>
 			</tr>
 		</table>
+		<table cellpadding="0px" cellpadding="0px" border="1px" id="show_table"></table>
+		<table cellpadding="0px" cellpadding="0px" border="1px" id="query_table">
+		</table>
+		</div>
 	</body>
 </html>

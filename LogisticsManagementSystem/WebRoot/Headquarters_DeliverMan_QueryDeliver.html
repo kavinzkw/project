@@ -2,30 +2,129 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="renderer" content="webkit">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="format-detection" content="telephone=no">
 <title>配送点管理-配送点查询</title>
-<link rel="stylesheet" href="css/style.css" media="all"> 
+<link href="css/user_queryoid.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="./css/x-admin.css" media="all" />
+        <link rel="stylesheet" href="css/pag.css" media="all" /> 
+<script type="text/javascript" src="js/ajax.js"></script>
+<script type="text/javascript" src="js/jquery1.9.0.min.js"></script>
+<style>
+       	.tablelist{
+      		text-align:  center;
+      	   }
+      	   .button1{
+      	   width:100%;
+      	   text-align:  center;
+      	   }
+      	   #main{
+      	   text-align:  center;
+      	   }	
+        </style>
+<script type="text/javascript">
+ var snum=1;
+ var pnum=1;
+$(function(){
+ add(1);
+});
+
+function add(page){
+$ajax({
+ url:"Headquarters_QueryDeliver.do",
+ type:"post",
+ data:{"page":page},
+ success:function(data){
+   var sum=data[0].sum;
+     var num=sum/10;
+     if(sum%10!=0){
+     num++;}
+     pnum=num;
+     var  button=$("<button onclick='xia()'>《-</button>");
+      $("#button1").append(button);
+     for(var i=1;i<=num;i++){
+     var button=$("<button onclick='check("+i+")'>"+i+"</button>");
+     $("#button1").append(button);
+     }
+     var  button=$("<button onclick='shang()'>-》</button>");
+      $("#button1").append(button);
+ for(var i=1;i<data.length;i++){
+     var tr=$("<tr></tr>");
+     var td=$("<td>"+data[i].sid+"</td>");
+     tr.append(td);
+     td=$("<td>"+data[i].sanme+"</td>");
+     tr.append(td);
+     td=$("<td>"+data[i].site_range+"</td>");
+     tr.append(td);
+     td=$("<td>"+data[i].province+"</td>");
+     tr.append(td);
+     td=$("<td>"+data[i].uidname+"</td>");
+     tr.append(td);
+     $("#table").append(tr);
+ }
+ var span1=  $("<span id='son2'>"+"当前页面为第"+snum+"页"+"</span>");
+$("#son1").append(span1);
+ },
+ error:function(){}
+ });
+ }
+ function delete1(){
+     $("tr").each(function(index,element){
+					if(index>=1){
+						element.remove();
+					}
+				});
+	 $("button").each(function(index,element){
+						element.remove();
+	});
+	$("#son2").remove();
+	}
+    function check(num){
+    delete1();
+    add(num);
+    snum=num;
+    }
+    
+    function shang(){
+    delete1();
+	add(snum+1<=pnum?snum+=1:snum);
+	
+    }
+     function xia(){
+     delete1();
+	add(snum-1>0?snum-=1:snum);
+    }
+    function tz(){
+    var tznum=$("#tz").val();
+    if(tznum>0&&tznum<=pnum){
+    
+    delete1();
+	add(tznum);
+	snum=parseInt(tznum);
+    }
+    else{
+    alert("输入错误,无法跳转");
+    }
+    }
+</script>
 </head>
 
 <body>
-<div >
-  
-     <center><table width="300px" border="1">
-     	<tr>
-     	<td>站点编号</td>
-     	<td>站点名称</td>
-     	<td>配送范围</td>
-     	<td>站点管理人员</td>
-     	<td>所属省</td>
-     	</tr>
-     </table>
-     </center>
-
+<div id="son1"></div>
+<div id="main">
+     <span style="font-size: 25px;">配送点查看</span>
+     <center><table id="table" class="tablelist" style="font-size: 20px;">
+	 <thead>
+	 <tr>
+	  <th style="text-align: center;" width="11%">站点编号</th>
+	  <th style="text-align: center;" width="11%">站点名称</th>
+	  <th style="text-align: center;" width="11%">配送范围</th>
+	  <th style="text-align: center;" width="11%">所属省份</th>
+	  <th style="text-align: center;" width="11%">站点管理员</th>
+	 </tr>
+	 </thead>
+	</table>
+    </center>
+</div>
+<div id="button1">
 </div>
 </body>
 </html>

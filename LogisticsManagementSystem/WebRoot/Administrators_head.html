@@ -6,7 +6,42 @@
 <link rel="stylesheet" type="text/css" href="css/public.css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript" src="js/ajax.js"></script>
 <script type="text/javascript" src="js/external.js"></script>
+<script type="text/javascript">
+     $(function(){
+        $ajax({
+        url:"name.do",
+  				type:"post",
+  				data:{
+  				    
+  				},
+  				success:function(data){
+  					var name = data.substring(3);
+  					document.getElementById("span1").innerText = name;
+  				},
+  				error:function(error){
+  					alert(error);
+  				}
+        });
+     });
+     function DeleteSession(){
+            $ajax({
+        url:"deletesession.do",
+  				type:"post",
+  				data:{
+  				    
+  				},
+  				success:function(data){
+  					alert(data);
+  					
+  				},
+  				error:function(error){
+  					alert(error);
+  				}
+        });
+     }
+</script>
 
 </head>
 
@@ -17,11 +52,11 @@
 			<img class="headLogo" src="images/banner2.png"/>
 		</div>
 		<div class="headR">
-	    <a href="login.html" target="_parent">【退出】</a>
+	    <a href="login.html" target="_parent">  <input type="button" id="changestate" value="退出" onclick="DeleteSession();"/></a>
 		</div>
 	</div>
     <div class="user">
-    <span>admin</span>
+    <span id = "span1"></span>
     </div> 
     
 </body>

@@ -2,30 +2,154 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="renderer" content="webkit">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="format-detection" content="telephone=no">
 <title>路线设置-路线管理</title>
-<link rel="stylesheet" href="css/style.css" media="all"> 
+
+<link href="css/user_queryoid.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="./css/x-admin.css" media="all"/>
+        <link rel="stylesheet" href="css/pag.css" media="all"/> 
+        		<script type="text/javascript" src="js/jquery1.9.0.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+        
+   <style type="text/css">
+/*引入字体*/
+	@font-face {
+  font-family: '幼圆';   /*字体名称*/
+  src: url('SIMYOU.ttf');       /*字体源文件*/
+	}
+	{
+		font-size: 16px;
+		font-family: 幼圆;
+		font-weight: bold;
+	}
+	#main{
+		text-align: center;
+	}
+    .tablelist{
+      		text-align:  center;
+     }
+     #addsite{
+     float: right;
+     }	
+</style>
+<script type="text/javascript">
+    var snum=1;
+    //页面总数
+    var pnum=1;
+    //排序的字段
+$(function(){
+ajaxquery(1,null,null);
+});
+function ajaxquery(page,deletefor,add){
+$ajax({
+url:"Headquarters_ManRoute.do",
+type:"post",
+data:{"page":page,"deletefor":deletefor,"add":add},
+success:function(data){
+if(typeof(data) == "object" ){
+     var sum=parseInt(data[0].rid);
+     var num=sum/10;
+     if(sum%10!=0){
+     num++;}
+     pnum=num;
+     var  button=$("<button onclick='xia()'>《-</button>");
+      $("#button1").append(button);
+     for(var i=1;i<=num;i++){
+     var button=$("<button onclick='check("+i+")'>"+i+"</button>");
+     $("#button1").append(button);
+     }
+     var  button=$("<button onclick='shang()'>-》</button>");
+      $("#button1").append(button);
+
+for(var i=1;i<data.length;i++){
+        var tr=$('<tr></tr>');
+		var td=$("<td>"+data[i].rid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].start_sname+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].end_sname+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].after_sname+"</td>");
+		tr.append(td);
+		td=$("<td><input type='button' value='删除' onclick='deleterid(\""+data[i].rid+"\")'/></td>");
+		tr.append(td);
+		$("#table").append(tr);
+}
+}
+else if(data.substring(3)=="success"){
+   alert("删除成功");
+   window.location.reload();
+}
+else if(data.substring(3)=="no"){
+   alert("删除失败");
+}
+else if(data.substring(3)=="success1"){
+    alert("增加成功");
+    window.location.reload();
+}
+else {
+   alert("增加失败");
+}
+var span1=  $("<span id='son2'>"+"当前页面为第"+snum+"页"+"</span>");
+$("#son1").append(span1);
+},
+error:function(){}
+});
+}
+ function delete1(){
+     $("tr").each(function(index,element){
+					if(index>=1){
+						element.remove();
+					}
+				});
+	 $("button").each(function(index,element){
+						element.remove();
+	});
+	$("#son2").remove();
+	}
+    function check(num){
+    delete1();
+    ajaxquery(num,null,null);
+    snum=num;
+    }
+    
+    function shang(){
+    delete1();
+	ajaxquery(snum+1<=pnum?snum+=1:snum,null,null);
+	
+    }
+     function xia(){
+     delete1();
+	ajaxquery(snum-1>0?snum-=1:snum,null,null);
+    }
+  function deleterid(rid){
+     ajaxquery(snum,rid,null);
+  }
+  function addroute(){
+  alert("功能还未实现");
+  }
+</script>
 </head>
 
 <body>
-<div >
-  
-     <center><table width="800px" border="1">
+<div id="son1"></div>
+  <div id="main">
+    <span style="font-size: 25px;">路线管理</span>
+    <input type="button" id="addsite" value="增加" onclick="addroute()"/>
+     <table class="tablelist" id="table">
+     <thead>
      	<tr>
-     	<td>路线编号</td>
-     	<td>起始站点</td>
-     	<td>终止站点</td>
-     	<td>途径站点</td>
-     	<td>修改</td>
+     	<th style='text-align: center;'>路线编号</th>
+     	<th style='text-align: center;'>起始站点</th>
+     	<th style='text-align: center;'>终止站点</th>
+     	<th style='text-align: center;'>途径站点</th>
+     	<th style='text-align: center;'>管理</th>
      	</tr>
+     	</thead>
      </table>
-     </center>
-
+     <div id="button1">
+     </div>
+     <div id="addtable"></div>
 </div>
 </body>
 </html>

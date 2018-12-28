@@ -4,6 +4,48 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" href="css/bootstrap.css" />
+		<script type="text/javascript" src="js/jquery1.9.0.min.js"></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+		<script type="text/javascript">
+		   var oid=null;
+		   var returns=null;
+		     function query(){
+		     oid=$("#oid").val();
+		     $ajax({
+		     url:"User_Retrun.do",
+		     type:"post",
+		      data:{"oid":oid,"returns":returns},
+		      success:function(data){
+		      if(data){
+		        alert("此单号存在");
+		      }
+		      else{
+		      alert("您输错了吧！");
+		      }
+		      },
+		      error:function(data){alert(data);}
+		      });
+		     }
+		     function tj(){
+		     oid=$("#oid").val();
+		     returns=$("#reason").val();
+		     $ajax({
+		     url:"User_Retrun.do",
+		     type:"post",
+		      data:{"oid":oid,"returns":returns},
+		      success:function(data){
+		      if(data){
+		        alert("提交成功");
+		        window.location.reload();
+		      }
+		      else{
+		      alert("您输错单号了吧！");
+		      }
+		      },
+		      error:function(data){alert(data);}
+		      });
+		     }
+		</script>
 		<style>
 			tr{
 				height: 50px;
@@ -19,26 +61,22 @@
 		<div class="div1"> 
 		<table class = "retrun_table" width="400px"  cellpadding="0px" cellspacing="0px"border="1px solid black">
 			<tr>
-				<td colspan="3" align="center"><h2 style="font-size: 26px;">退货清单</h2></td>
+				<td colspan="3" align="center"><h2 style="font-size: 26px;">请求退货</h2></td>
 			</tr>
 			<tr>
 				<td width="80px" align="center">订单编号</td>
 				<td><input type="text" name="bianhao" id="oid"/></td>
-				<td width="80px" align="center"><button>查询</button></td>
+				<td width="80px" align="center"><input type="button" value="查询是否存在" onclick="query()"></td>
 				
-			</tr>
-			<tr>
-				<td align="center">退货商品类型</td>
-				<td colspan="2" ><input type="text" name="bianhao" id="bianhao" value="" /></td>
 			</tr>
 			<tr>
 				<td align="center">退货原因</td>
 				<td colspan="2" >
-				<textarea name="reason" cols="20" rows="5"></textarea>
+				<textarea name="reason" cols="20" rows="5" style="width: 300px" id="reason"></textarea>
 				</td>
 			</tr>
 			<tr>
-				<td align="center" colspan="3"><input type="submit" name="" id="" value="提交" />
+				<td align="center" colspan="3"><input type="submit" name="" id="" value="提交" onclick="tj()" />
 				</td>
 				</tr>
 		</table>

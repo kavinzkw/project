@@ -3,17 +3,157 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>车辆管理-查看车辆</title>
-	</head>
-	<body>
-		<table cellpadding="0px" cellspacing="0px" border="1px solid black" width="600px">
-			<tr>
-				<td> 车辆id</td>
-				<td>车辆状态</td>
-				<td>所属路线编号</td>
-				<td>车辆最大运输量</td>
-				<td>最大运输体积</td>
-				<td>车辆所在地</td>
-			</tr>
-		</table>
-	</body>
+	<link href="css/user_queryoid.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="./css/x-admin.css" media="all"/>
+        <link rel="stylesheet" href="css/pag.css" media="all"/> 
+        		<script type="text/javascript" src="js/jquery1.9.0.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+        
+   <style type="text/css">
+/*引入字体*/
+	@font-face {
+  font-family: '幼圆';   /*字体名称*/
+  src: url('SIMYOU.ttf');       /*字体源文件*/
+	}
+	{
+		font-size: 16px;
+		font-family: 幼圆;
+		font-weight: bold;
+	}
+	#main{
+		text-align: center;
+	}
+    .tablelist{
+      		text-align:  center;
+     }
+     #addsite{
+     float: right;
+     }	
+</style>
+<script type="text/javascript">
+    var snum=1;
+    //页面总数
+    var pnum=1;
+    //排序的字段
+$(function(){
+ajaxquery(1,null,null);
+});
+function ajaxquery(page,deletefor,add){
+$ajax({
+url:"Headquarters_QueryTruck.do",
+type:"post",
+data:{"page":page,"deletefor":deletefor,"add":add},
+success:function(data){
+if(typeof(data) == "object" ){
+     var sum=parseInt(data[0].cid);
+     var num=sum/10;
+     if(sum%10!=0){
+     num++;}
+     pnum=num;
+     var  button=$("<button onclick='xia()'>《-</button>");
+      $("#button1").append(button);
+     for(var i=1;i<=num;i++){
+     var button=$("<button onclick='check("+i+")'>"+i+"</button>");
+     $("#button1").append(button);
+     }
+     var  button=$("<button onclick='shang()'>-》</button>");
+      $("#button1").append(button);
+
+for(var i=1;i<data.length;i++){
+        var tr=$('<tr></tr>');
+		var td=$("<td>"+data[i].cid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].starts+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].big_traffic+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].big_volume+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].place_now+"</td>");
+		tr.append(td);
+		td=$("<td><input type='button' value='删除' onclick='deleterid(\""+data[i].cid+"\")'/>"+
+		"<input type='button' value='修改' onclick='updatefrom(\""+data[i].cid+"\")'/></td>");
+		tr.append(td);
+		$("#table").append(tr);
+}
+}
+else if(data.substring(3)=="success"){
+   alert("删除成功");
+   window.location.reload();
+}
+else if(data.substring(3)=="no"){
+   alert("删除失败");
+}
+else if(data.substring(3)=="success1"){
+    alert("增加成功");
+    window.location.reload();
+}
+else {
+   alert("增加失败");
+}
+var span1=  $("<span id='son2'>"+"当前页面为第"+snum+"页"+"</span>");
+$("#son1").append(span1);
+},
+error:function(){}
+});
+}
+ function delete1(){
+     $("tr").each(function(index,element){
+					if(index>=1){
+						element.remove();
+					}
+				});
+	 $("button").each(function(index,element){
+						element.remove();
+	});
+	$("#son2").remove();
+	}
+    function check(num){
+    delete1();
+    ajaxquery(num,null,null);
+    snum=num;
+    }
+    
+    function shang(){
+    delete1();
+	ajaxquery(snum+1<=pnum?snum+=1:snum,null,null);
+	
+    }
+     function xia(){
+     delete1();
+	ajaxquery(snum-1>0?snum-=1:snum,null,null);
+    }
+  function deleterid(rid){
+     ajaxquery(snum,rid,null);
+  }
+  function addroute(){
+  alert("功能还未实现");
+  }
+</script>
+</head>
+
+<body>
+<div id="son1"></div>
+  <div id="main">
+    <span style="font-size: 25px;">车辆管理</span>
+    <input type="button" id="addsite" value="增加" onclick="addroute()"/>
+     <table class="tablelist" id="table">
+     <thead>
+     	<tr>
+     	<th style='text-align: center;' width="11%">车辆编号</th>
+     	<th style='text-align: center;' width="11%">车辆状态</th>
+     	<th style='text-align: center;' width="11%">车辆最大运输量(吨)</th>
+     	<th style='text-align: center;' width="11%">车辆最大运输体积(立方米)</th>
+     	<th style='text-align: center;' width="11%">车辆所在站点</th>
+     	<th style='text-align: center;' width="20%">管理</th>
+     	</tr>
+     	</thead>
+     </table>
+     <div id="button1">
+     </div>
+     <div id="addtable"></div>
+</div>
+</body>
+</html>
 </html>

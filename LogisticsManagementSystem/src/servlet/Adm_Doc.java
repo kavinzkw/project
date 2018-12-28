@@ -19,7 +19,7 @@ import com.alibaba.fastjson.JSON;
 
 import entity.UserOrder;
 import utils.ConnectionUtils;
-@WebServlet(value="/doc.do")
+
 public class Adm_Doc extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) 
@@ -42,7 +42,7 @@ public class Adm_Doc extends HttpServlet{
 		PreparedStatement pstm;
 		String sql ="select oid, category,state,send_data from (select oid, category,state,send_data from user_odr "
 				+ "where oid in (select oid from site_orders where sid ="
-				+ "(select sid from users_wl where uid_wl=?))and state='‘À ‰') a where oid like ? and send_data like ? ";
+				+ "(select sid from users_wl where uid_wl=?))and state=' ‹¿Ì') a where oid like ? and send_data like ? ";
 		ResultSet rs;
 		UserOrder uo=new UserOrder();
 		ArrayList<UserOrder> list = new ArrayList<UserOrder>();

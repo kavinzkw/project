@@ -5,15 +5,15 @@
 		<meta charset="UTF-8">
 		<title>客户端-查询订单</title>
 		<link href="css/user_queryoid.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="./css/x-admin.css" media="all">
+        <link rel="stylesheet" href="css/pag.css" media="all"> 
 		<script type="text/javascript" src="js/jquery1.9.0.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/ajax.js"></script>
 		<style type="text/css">
-			#main{
-				width: 1920;
-				position: absolute;
-				margin:auto 700px;
-			}
+				.tablelist{
+      		text-align:  center;
+      	}	
 		</style>
 		<script type="text/javascript">
 		var Orders=null;
@@ -25,7 +25,9 @@
 		data:{"Orders":Orders,"Orders_id":Orders_id},
 		success:function(data){
 		if(data.length>0){
-		var tr=$("<tr><td>订单编号</td><td>寄货人</td><td>寄货日期</td><td>收货日期</td><td>类别</td><td>状态</td><td>签收人</td></tr>");
+		var tr=$("<thead><tr><th style='text-align: center;' width='11%'>订单编号</th><th style='text-align: center;' width='11%'>寄货人</th>"+
+		"<th style='text-align: center;' width='11%'>寄货日期</th><th style='text-align: center;' width='11%'>收货日期</th>"+
+		"<th style='text-align: center;' width='11%'>类别</th><th style='text-align: center;' width='11%'>状态</th><th style='text-align: center;' width='11%'>签收人</th></tr></thead>");
 		$("#show_table").append(tr);
 		}
 		for(var i=0;i<data.length;i++){
@@ -60,7 +62,7 @@
 		success:function(data){
 		if(data.length>0){
 		$("#query_table").empty();
-		var tr=$("<tr><td>到达站点</td><td>到达时间</td></tr>");
+		var tr=$("<thead><tr><th style='text-align: center;' width='11%'>到达站点</th><th style='text-align: center;' width='11%'>到达时间</th></tr></thead>");
 		$("#query_table").append(tr);
 		for(var i=0;i<data.length;i++){  
 		var tr=$("<tr></tr>");
@@ -88,8 +90,9 @@
 		success:function(data){
 		if(data!="msg"){
 		$("#show_table").empty();
-		var tr=$("<tr><td>订单编号</td><td>寄货人</td><td>寄货日期</td><td>收货日期</td><td>类别</td><td>状态</td><td>签收人</td></tr>");
-		$("#show_table").append(tr);
+		var tr=$("<thead><tr><th style='text-align: center;' width='11%'>订单编号</th><th style='text-align: center;' width='11%'>寄货人</th>"+
+		"<th style='text-align: center;' width='11%'>寄货日期</th><th style='text-align: center;' width='11%'>收货日期</th>"+
+		"<th style='text-align: center;' width='11%'>类别</th><th style='text-align: center;' width='11%'>状态</th><th style='text-align: center;' width='11%'>签收人</th></tr></thead>");
 		$("#show_table").append(tr);
 		
 		for(var i=0;i<data.length;i++){
@@ -124,12 +127,12 @@
 	</head>
 
 	<body>
-		<div id="main">
-		<table class="table" width="400px" border="1px solid black" cellpadding="0px" cellspacing="0px">
+		<div>
+		<center><table class="table" width="550px" border="1px solid black" cellpadding="0px" cellspacing="0px">
 			<tr><td colspan="3" align="center"><h2 style="font-size: 26px;">查询订单</h2></td></tr>
 			<tr>
 				<td>
-					订单编号或收货人：
+					<span style="font-size: 18px;"> 订单编号或收货人：</span>
 				</td>
 				<td>
 					<input type="text" id="query_oid" />
@@ -139,8 +142,12 @@
 				</td>
 			</tr>
 		</table>
-		<table cellpadding="0px" cellpadding="0px" border="1px" id="show_table"></table>
-		<table cellpadding="0px" cellpadding="0px" border="1px" id="query_table">
+		</center>
+		</div>
+		<div width="100%">
+		<table width="100%"></table>
+		<table class="tablelist" id="show_table" ></table>
+		<table class="tablelist" id="query_table" >
 		</table>
 		</div>
 	</body>

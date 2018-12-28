@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>货物配送-库存订单查询</title>
+		<link rel="stylesheet" href="css/bootstrap.css" />
+		<script type="text/javascript" src="js/jquery-1.11.0.min.js" ></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				$ajax({
+					url:"Distribute_QueryStock.do",
+					type:"get",
+					data:{},
+					success:function(data){
+					if(data.length>0){
+					var tr=$("<tr ><td>订单号</td><td>配送地址</td><td>订单类别</td><td>接收时间</td><td>剩余时间</td></tr>");
+					$("#tb1").append(tr);
+					}
+					for(var i=0;i<data.length;i++){
+						var tr=$("<tr></tr>");
+						var td=$("<td>"+data[i].oid+"</td>")
+						tr.append(td);
+						var td=$("<td>"+data[i].receiving_ars+"</td>")
+						tr.append(td);
+						var td=$("<td>"+data[i].category+"</td>")
+						tr.append(td);
+						var td=$("<td>"+data[i].send_data+"</td>")
+						tr.append(td);
+						var td=$("<td>"+data[i].resttime+"</td>")
+						tr.append(td);
+						$("#tb1").append(tr);
+					}
+				},
+				error:function(data){
+				}
+				});	
+			});
+			
+		</script>
+		<style type="text/css">
+		*{
+		font-size: 16px;
+		font-family: 幼圆;
+		font-weight: bold;
+		}
+		#main{
+			text-align: center;
+		}
+		/*表格居中*/
+		#tb1{
+		width: 600px;
+		margin: 0px auto;
+		text-align: center;
+		line-height: 40px;
+			}
+		#td1{
+			border: none;
+		}
+		#tr1 td{
+			background-color: #cccccc;
+			text-align: center;
+		}
+		</style>
+	</head>
+	<body>
+		<div id="main">
+		<div id="tit"><h2>库存订单</h2></div>
+		<table id="tb1" cellpadding="0px" cellspacing="0px" border="1px solid black">
+		</table>
+		</div>
+	</body>
+</html>

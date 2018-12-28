@@ -24,7 +24,7 @@ public class Adm_Doq extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
-			String uid ="u1006";
+			String uid ="u1001";
 			
 			req.setCharacterEncoding("utf-8");
 			resp.setContentType("text/html;charset=utf-8");
@@ -39,9 +39,9 @@ public class Adm_Doq extends HttpServlet{
 	public ArrayList<UserOrder> selectDO(String uid) {
 		Connection conn;
 		PreparedStatement pstm;
-		String sql ="select oid, category,state,send_data from user_odr "
+		String sql ="select oid, category,state,send_data, receiving_ars from user_odr "
 				+ "where oid in (select oid from site_orders where sid ="
-				+ "(select sid from users_wl where uid_wl=?))and state='‘À ‰'  ";
+				+ "(select sid from users_wl where uid_wl=?))and state=' ‹¿Ì'  ";
 		ResultSet rs;
 		UserOrder uo=new UserOrder();
 		ArrayList<UserOrder> list = new ArrayList<UserOrder>();
@@ -55,6 +55,7 @@ public class Adm_Doq extends HttpServlet{
 				uo.setCategory(rs.getString(2));
 				uo.setState(rs.getString(3));
 				uo.setSenddata(rs.getString(4));
+				uo.setReceiving_ars(rs.getString(5));
 				list.add(uo);
 			}
 		} catch (SQLException e) {

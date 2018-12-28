@@ -4,6 +4,8 @@ public class User_Odr {
 	private String oid;
 	private String send_siteid;
 	private String receiving_siteid;
+	private String send_sitename;
+	private String rece_sitename;
 	private String send_data;
 	private String receive_data;
 	private String category;
@@ -18,18 +20,20 @@ public class User_Odr {
 	private float volume;
 	private String good_name;
 	private int good_num;
-	private float price;
+	private double price;
 	private int insured;
 	private int pay_method;
 	private long resttime;
-	public User_Odr(String oid, String send_siteid, String receiving_siteid, String send_data, String receive_data,
-			String category, String state, String send_name, String send_tel, String send_address,
-			String receiving_name, String receiving_tel, String receiving_ars, float weight, float volume,
-			String good_name, int good_num, float price, int insured, int pay_method, long resttime) {
+	public User_Odr(String oid, String send_siteid, String receiving_siteid, String send_sitename, String rece_sitename,
+			String send_data, String receive_data, String category, String state, String send_name, String send_tel,
+			String send_address, String receiving_name, String receiving_tel, String receiving_ars, float weight,
+			float volume, String good_name, int good_num, float price, int insured, int pay_method, long resttime) {
 		super();
 		this.oid = oid;
 		this.send_siteid = send_siteid;
 		this.receiving_siteid = receiving_siteid;
+		this.send_sitename = send_sitename;
+		this.rece_sitename = rece_sitename;
 		this.send_data = send_data;
 		this.receive_data = receive_data;
 		this.category = category;
@@ -69,6 +73,18 @@ public class User_Odr {
 	}
 	public void setReceiving_siteid(String receiving_siteid) {
 		this.receiving_siteid = receiving_siteid;
+	}
+	public String getSend_sitename() {
+		return send_sitename;
+	}
+	public void setSend_sitename(String send_sitename) {
+		this.send_sitename = send_sitename;
+	}
+	public String getRece_sitename() {
+		return rece_sitename;
+	}
+	public void setRece_sitename(String rece_sitename) {
+		this.rece_sitename = rece_sitename;
 	}
 	public String getSend_data() {
 		return send_data;
@@ -154,11 +170,11 @@ public class User_Odr {
 	public void setGood_num(int good_num) {
 		this.good_num = good_num;
 	}
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(float price) {
-		this.price = price;
+	public void setPrice(double d) {
+		this.price = d;
 	}
 	public int getInsured() {
 		return insured;
@@ -181,12 +197,13 @@ public class User_Odr {
 	@Override
 	public String toString() {
 		return "User_Odr [oid=" + oid + ", send_siteid=" + send_siteid + ", receiving_siteid=" + receiving_siteid
-				+ ", send_data=" + send_data + ", receive_data=" + receive_data + ", category=" + category + ", state="
-				+ state + ", send_name=" + send_name + ", send_tel=" + send_tel + ", send_address=" + send_address
-				+ ", receiving_name=" + receiving_name + ", receiving_tel=" + receiving_tel + ", receiving_ars="
-				+ receiving_ars + ", weight=" + weight + ", volume=" + volume + ", good_name=" + good_name
-				+ ", good_num=" + good_num + ", price=" + price + ", insured=" + insured + ", pay_method=" + pay_method
-				+ ", resttime=" + resttime + "]";
+				+ ", send_sitename=" + send_sitename + ", rece_sitename=" + rece_sitename + ", send_data=" + send_data
+				+ ", receive_data=" + receive_data + ", category=" + category + ", state=" + state + ", send_name="
+				+ send_name + ", send_tel=" + send_tel + ", send_address=" + send_address + ", receiving_name="
+				+ receiving_name + ", receiving_tel=" + receiving_tel + ", receiving_ars=" + receiving_ars + ", weight="
+				+ weight + ", volume=" + volume + ", good_name=" + good_name + ", good_num=" + good_num + ", price="
+				+ price + ", insured=" + insured + ", pay_method=" + pay_method + ", resttime=" + resttime + "]";
 	}
+	
 	
 }

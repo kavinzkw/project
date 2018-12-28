@@ -1,30 +1,114 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="renderer" content="webkit">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="format-detection" content="telephone=no">
+      <link href="css/user_queryoid.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="./css/x-admin.css" media="all"/>
+        <link rel="stylesheet" href="css/pag.css" media="all"/> 
+		<script type="text/javascript" src="js/jquery1.9.0.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
 <title>信息查询-交接单查询</title>
-<link rel="stylesheet" href="css/style.css" media="all"> 
+<style type="text/css">
+/*引入字体*/
+	@font-face {
+  font-family: '幼圆';   /*字体名称*/
+  src: url('SIMYOU.ttf');       /*字体源文件*/
+	}
+	{
+		font-size: 16px;
+		font-family: 幼圆;
+		font-weight: bold;
+	}
+	#main{
+		text-align: center;
+	}
+    .tablelist{
+      		text-align:  center;
+     }	
+    h2{
+		text-align: center;
+		margin-top: 100px;
+	}
+</style>
+<script type="text/javascript">
+   $(function(){
+   $ajax({
+   url:"Headquarters_QueryHandover.do",
+   type:"post",
+   data:{},
+   success:function(data){
+     
+		for(var i=0;i<data.length;i++){
+		var tr=$('<tr></tr>');
+		var td=$("<td>"+data[i].hoid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].ssid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].oid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].uid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].fuid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].ho_data+"</td>");
+		tr.append(td);
+		$("#tb1").append(tr);
+		}
+   },
+   error:function(data){alert(data);}
+   });
+   });
+   function chaxun() {
+	 $ajax({
+   url:"Headquarters_QueryHandover.do",
+   type:"post",
+   data:{"query":$("#oidoruid").val()},
+   success:function(data){
+   if(data.length>0){
+         $("#tb1 tr").not(':eq(0)').hide();
+		     $("#tb1 tr").not(':eq(0)').empty();
+		for(var i=0;i<data.length;i++){
+		var tr=$('<tr></tr>');
+		var td=$("<td>"+data[i].hoid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].ssid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].oid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].uid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].fuid+"</td>");
+		tr.append(td);
+		td=$("<td>"+data[i].ho_data+"</td>");
+		tr.append(td);
+		$("#tb1").append(tr);
+		}
+		}
+		else{
+		alert("未查询到数据！");}
+   },
+   error:function(data){alert(data);}
+   });
+   }
+</script>
 </head>
 
 <body>
-<div >
-  
-     <center><table width="300px" border="1">
+<div id="main">
+  	<div id="tit"><span style="font-size: 25px;">交接单查询</span></div>
+  	<span>输入交接人或订单号查询：</span><input type="text" id="oidoruid"/><input type="button" value="查询" onclick="chaxun()"/>
+      	<table id="tb1" class="tablelist">
+     	<thead>
      	<tr>
-     	<td>交接单编号</td>
-     	<td>封单号</td>
-     	<td>订单号</td> 
-     	<td>交接人</td>
-     	<td>交接时间</td>
+     	<th style='text-align: center;' width='11%'>交接单编号</th>
+     	<th style='text-align: center;' width='11%'>封单号</th>
+     	<th style='text-align: center;' width='11%'>订单号</th> 
+     	<th style='text-align: center;' width='11%'>交接人</th>
+     	<th style='text-align: center;' width='11%'>封单人</th>
+     	<th style='text-align: center;' width='11%'>交接时间</th>
      	</tr>
+     	</thead>
      </table>
-     </center>
 
 </div>
 </body>

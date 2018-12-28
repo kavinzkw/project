@@ -3,7 +3,65 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>本地信息设置-配送范围修改</title>
+		
 	</head>
 	<body>
+	    <script type="text/javascript" src="js/jquery1.9.0.min.js"></script>
+		<script type="text/javascript" src="js/ajax.js"></script>
+		<script type="text/javascript">
+		var site_range=null;
+		$(function(){
+		  $ajax({
+		  url:"Adm_LocalMsgSet_ModifyRange.do",
+		  type:"post",
+		  data:{"site_range":site_range},
+		  success:function(data){
+		  site_range=data.substring(3)
+		      $("#fanwei").text(site_range);
+		  },
+		  error:function(data){
+		  alret(data);
+		  }
+		  });
+		});
+		function xg(){
+		     $("#table tr").hide();
+		     $("#table tr").empty();
+		     var tr=$("<tr></tr>");
+		     var td=$("<td>您要修改本站点配送范围为：</td>");
+		     tr.append(td);
+		     td=$("<td><input type='text' id='site_range' value='"+site_range+"'/></td>");
+		     tr.append(td);
+		     td=$("<td><input type='button' onclick='Sure()' value='确定修改'/></td>");
+		     tr.append(td);
+		     $("#table").append(tr);
+		}
+		function Sure(){
+		  site_range=$("#site_range").val();
+		  if(site_range==""||site_range==null){
+		  alert("请输入范围！");
+		  }
+		  else
+		  $ajax({
+		  url:"Adm_LocalMsgSet_ModifyRange.do",
+		  type:"post",
+		  data:{"site_range":site_range},
+		  success:function(data){
+		      alert("修改成功！");
+		      window.location.reload();
+		  },
+		  error:function(data){
+		  alret(data);
+		  }
+		  });
+		}
+		</script>
+	<table id="table">
+	<tr>
+	<td>本站点配送范围为：</td>
+	<td id="fanwei"></td>
+	<td><input type="button" value="修改" onclick="xg()"> </td>
+	</tr>
+	</table>
 	</body>
 </html>

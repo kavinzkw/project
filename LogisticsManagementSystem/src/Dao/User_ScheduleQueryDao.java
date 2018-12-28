@@ -94,15 +94,15 @@ public class User_ScheduleQueryDao {
 								e.printStackTrace();
 							}
 							if(data!=null){
-						        usu.setReceiving_data(data.toLocaleString());
+						        usu.setSend_data(data.toLocaleString());
 							 }
 							  else
-								 usu.setReceiving_data(""); 
+								 usu.setSend_data(rs.getString(2)); 
 							  if(data1!=null){
 						        usu.setReceiving_data(data1.toLocaleString());
 							 }
 							  else
-								 usu.setReceiving_data(""); 
+								 usu.setReceiving_data(rs.getString(3)); 
 							 usu.setCategory(rs.getString(4));
 							 usu.setState(rs.getString(5));
 							 usu.setReceiving_name(rs.getString(6));
@@ -148,7 +148,7 @@ public class User_ScheduleQueryDao {
 						        usu.setReceiving_data(data1.toLocaleString());
 							 }
 							  else
-								 usu.setReceiving_data("");  
+								 usu.setReceiving_data(rs.getString(4));  
 							 usu.setCategory(rs.getString(5));
 							 usu.setState(rs.getString(6));
 							 usu.setReceiving_name(rs.getString(7));
@@ -172,8 +172,8 @@ public class User_ScheduleQueryDao {
 					ResultSet rs=null;
 					ArrayList<Route> route=new ArrayList<Route>();
 					String sql="select sname, tt_data from transport_time,site where "
-							+ "transport_time.tt_sid=site.sid and tsid = (select tsid from "
-							+ "transport where INSTR(ssid,(select ssid from sealing_sheet where oid=?))) order by tt_data ";
+							+ "transport_time.tt_sid=site.sid and tsid = (select tsid  "
+							+ "from transport where INSTR(ssid,(select ssid from sealing_sheet where INSTR(oid,?)))) order by tt_data ";
 					try {
 						 conn=ConnectionUtils.getConnection();
 						 prst=conn.prepareStatement(sql);

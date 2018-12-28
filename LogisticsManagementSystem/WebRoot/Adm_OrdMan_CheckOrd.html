@@ -72,8 +72,8 @@
             $("#tb :checkbox").prop("checked", false);
         }
     });
-});       //显示站点的所有审核订单
-function oneToAll() {
+});     
+ function oneToAll() {
 
 var allChecked = 0;//所有选中checkbox的数量
 
@@ -98,55 +98,7 @@ $("#checkall").prop("checked",false);
 }
 
 }
-         /*   function sousuo(){
-            var statenum = document.getElementById("statenum").value; 
-            if(statenum!=""){
-             $ajax({
-             url:"audit.do",
-  				type:"post",
-  				data:{
-  					
-  				},
-    			success : function(data) {
-                         $(".tablelist tr").not(':eq(0)').empty();
-    				for (var i = 0; i < data.length; i++) {
-    					var tr = $('<tr></tr>');
-    					var td =$( '<td>' +
-                            '<input type="checkbox" id="id" value="'+data[i].oId+'" name="selected"  onclick="oneToAll()">' +
-                        '</td>');
-    					tr.append(td);
-    					td = $("<td>" + data[i].oId + "</td>");
-    					tr.append(td);
-    					td = $("<td>" + data[i].sePlace + "</td>");
-    					tr.append(td);
-    					td = $("<td>" + data[i].rePlace + "</td>");
-    					tr.append(td);
-    					td = $("<td>" + data[i].seName + "</td>");
-    					tr.append(td);
-    					td = $("<td>" + data[i].setel + "</td>");
-    					tr.append(td);
-    					td = $("<td>" + data[i].date + "</td>");
-    					tr.append(td);
-    					td = $("<td>" + data[i].state + "</td>");
-    					tr.append(td);
-    					td = $('<td>' + '<input type="button" id="changestate" value="审核" onclick="ChangeState()"/>' + '</td>');
-                        tr.append(td);
-    					$(".tablelist").append(tr);
-    					num+=1;
-    				}
-    				document.getElementById("show_num").innerText ="当前数据有"+num+"条";
-    				
-    			},
-    			error:function(error){
-  					alert(error);
-  				}
-             });
-            }
-            else{
-              alert("请输入站点编号");
-            }
-             
-           } */
+
            function ChangeState(){
                 var value ="";//定义一个数组    
        $('input[name="selected"]:checked').each(function(){//遍历每一个名字为selected的复选框，其中选中的执行函数    
@@ -154,13 +106,14 @@ $("#checkall").prop("checked",false);
        });
        if(value!=""){
          $ajax({
-             url:"audit.do",
+             url:"ordchangestate.do",
   				type:"post",
   				data:{
   					changsid:value
   				},
     			success : function(data) {
                         alert(data.substring(3));
+                        window.location.reload(); 
     			},
     			error:function(error){
   					alert(error);
@@ -177,16 +130,17 @@ $("#checkall").prop("checked",false);
               <a><cite>首页</cite></a>
               <a><cite>订单审核</cite></a>
             </span>
-            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+           
         </div>
-                    <div class="layui-input-inline" style="width:400px">
-                         <!-- 从此处得到数据 --> 
+                  <!--   <div class="layui-input-inline" style="width:400px">
+                         从此处得到数据 
                      <label>站点编号</label> <input type="text" name="statename" id="statenum" placeholder="请输入站点编号" autocomplete="off" class="layui-input">
                        <button class="layui-btn" onclick = "sousuo()">搜索</button>
                     </div> 
-            <div class="tools">
+            <div class="tools"> -->
             <br>
-    <input type="button" id="changestate" value="批量审核" onclick="ChangeState()"/>
+          <input type="button" id="changestate" value="批量审核" onclick="ChangeState();"/>
+     
     <label id="show_num" style="line-height:25px ;">当前数据有0条</label></xblock>
       <br>
   </div>

@@ -25,6 +25,22 @@
   				}
         });
      });
+     function DeleteSession(){
+            $ajax({
+        url:"deletesession.do",
+  				type:"post",
+  				data:{
+  				    
+  				},
+  				success:function(data){
+  					alert(data);
+  					
+  				},
+  				error:function(error){
+  					alert(error);
+  				}
+        });
+     }
 </script>
 
 </head>
@@ -36,7 +52,7 @@
 			<img class="headLogo" src="images/banner2.png"/>
 		</div>
 		<div class="headR">
-	    <a href="login.html" target="_parent">【退出】</a>
+	    <a href="login.html" target="_parent">  <input type="button" id="changestate" value="【退出】" onclick="DeleteSession();"/></a>
 		</div>
 	</div>
     <div class="user">

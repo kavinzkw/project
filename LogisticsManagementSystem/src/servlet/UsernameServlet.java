@@ -14,9 +14,8 @@ public class UsernameServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter pw = resp.getWriter();
-		HttpSession session = req.getSession();
+		HttpSession session = req.getSession(false);
 		String name = (String) session.getAttribute("loginName");
-		System.out.println("msg"+name);
 		pw.write("msg"+name);
 
 	}

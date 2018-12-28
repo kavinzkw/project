@@ -3,6 +3,8 @@ package servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,16 +44,31 @@ public class User_ScheduleQueryServlet extends HttpServlet{
 		    	 resp.getWriter().print(obj1);
 		    }
 		    else if(!Oid.equals("null")){
-		    	User_Ord_User uor=User_ScheduleQueryDao.QueryOrderInformation(Oid);
-		    	if(uor.getOid()!=null){
-		    	ArrayList<User_Ord_User> usu=new ArrayList<User_Ord_User>();
-		    	 usu.add(uor);
-		    	 Object obj1=JSON.toJSON(usu);
-		    	 resp.getWriter().print(obj1);
-		    }
-		    	else 
-		    		 resp.getWriter().print("msg");
+		    	    Pattern p = Pattern.compile("[0-9]");
+		            Matcher m = p.matcher(Oid);
+		            User_Ord_User uor=null;
+		            if(m.find()){
+		    	      uor=User_ScheduleQueryDao.QueryOrderInformation(Oid);
+		    	        if(uor.getOid()!=null){
+		  		    	ArrayList<User_Ord_User> usu=new ArrayList<User_Ord_User>();
+		  		    	 usu.add(uor);
+		  		    	 Object obj1=JSON.toJSON(usu);
+		  		    	 resp.getWriter().print(obj1);
+		  		        }
+		  		    	else 
+		  		    		 resp.getWriter().print("msg");
+		  		        } 
+		            else{
+		            	ArrayList<User_Ord_User> usu=User_ScheduleQueryDao.QueryOrderByname("u1022", Oid);
+		            	if(usu.size()<=0){
+		            		 resp.getWriter().print("msg");
+		            	}
+		            	else{
+		            		Object obj1=JSON.toJSON(usu);
+			  		    	resp.getWriter().print(obj1);
+		            	}
+		            }
 		    }
 	}
-
+ 
 }
